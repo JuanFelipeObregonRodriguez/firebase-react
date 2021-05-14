@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { auth } from '../fireconfig'
 const Menu = () => {
+    const  historial = useHistory()
     const [usuario, setUsuario] = useState('')
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
@@ -14,6 +15,7 @@ const Menu = () => {
     const cerrarSesion = () => {
         auth.signOut()
         setUsuario(null)
+        historial.push('/')
 
     }
 
@@ -21,15 +23,33 @@ const Menu = () => {
     return (
         <div>
             <nav className=" navbar nav-expand-lg navbar-dark bg-dark">
-                <ul className="navbar-nav mr-auto">
-                    <li className="nav-item">
+                <ul className= "container-fluid ">
+                    <li className="navbar-nav me-auto mb-2 mb-lg-0">
                         <Link className="nav-link" exact to="/">Inicio</Link>
                     </li>
-                    <li>
-                        <Link className="nav-link" to="/login">Login</Link>
+                    <li className="navbar-nav me-auto mb-2 mb-lg-0">{
+                        !usuario ? 
+                        (
+                            <Link className="nav-link" to="/login">Login</Link>
+                        )
+                        :
+                        (
+                            <span></span>
+                        )
+                        }
                     </li>
-                    <li>
-                        <Link className="nav-link" to="/admin">Admin</Link>
+                    <li className="navbar-nav me-auto mb-2 mb-lg-0">
+                    {
+                        !usuario ? 
+                        (
+                            <Link className="nav-link" to="/admin">Admin</Link>
+                        ):
+                        (
+                            <span></span>
+                        )
+                        
+                    }
+                        
                     </li>
                 </ul>
                 {

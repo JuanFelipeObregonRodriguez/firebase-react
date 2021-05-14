@@ -8,7 +8,7 @@ import Admin from './components/Admin'
 import Menu from './components/Menu'
 const App = () => {
   return (
-    <div>
+    <div className="container-fluid">
       <Router>
         <Menu></Menu>
         <Switch>

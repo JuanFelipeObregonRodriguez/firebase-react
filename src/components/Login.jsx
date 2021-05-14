@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { auth } from '../fireconfig'
+import { useHistory } from 'react-router-dom'
 const login = () => {
+    const Historial = useHistory()
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
     const [msgError, setMsgError] = useState(null)
@@ -8,7 +10,9 @@ const login = () => {
     const registrarUsuario = (e) => {
         e.preventDefault()
         auth.createUserWithEmailAndPassword(email, pass)
-            .then(r => alert('usuario registrado'))
+            .then(r => {
+                Historial.push('/')
+             } )
             .catch(e => {
                 if (e.code == 'auth/invalid-email') {
                     setMsgError('Formato de email incorrecto')
@@ -21,9 +25,9 @@ const login = () => {
     const loginUsuario =()=>{
 
         auth.signInWithEmailAndPassword(email, pass)
-        .then((r)=>(
-            console.log(r)
-        ))
+        .then((r)=>{
+            Historial.push('/')
+        })
         .catch((err)=>{
             if(err.code == 'auth/wrong-password'){
              setMsgError('la contraseña es incorrecta')   
